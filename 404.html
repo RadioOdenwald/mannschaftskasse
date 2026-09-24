@@ -80,6 +80,7 @@ header p{color:var(--ink2);font-size:13px;margin-top:3px;}
 .row em{font-style:normal;font-weight:800;white-space:nowrap;}
 .list{margin-top:10px;}
 .deckel{border-color:rgba(240,82,82,.28);background:radial-gradient(380px 160px at 100% 0%,rgba(240,82,82,.14),transparent 70%),linear-gradient(180deg,var(--s2),var(--s1));}
+.tunnel{border-color:rgba(34,197,94,.25);} .tunnel .row .rk{background:rgba(34,197,94,.12);font-size:16px;}
 .deckel .row .rk{background:rgba(240,82,82,.14);color:#fca5a5;}
 .deckel .row:first-child .rk{background:linear-gradient(180deg,#f05252,#b91c1c);color:#fff;}
 .tag{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:2px 6px;border-radius:6px;background:rgba(240,82,82,.12);color:#fca5a5;margin-right:6px;vertical-align:1px;}
@@ -109,7 +110,7 @@ footer{text-align:center;color:var(--ink3);font-size:12px;margin-top:18px;line-h
   <div id="app"><div class="skel"></div><div class="skel"></div></div>
   <footer>Nur für die Mannschaft – bitte nicht außerhalb der Gruppe teilen.<br>Zählt nur, was der Kassenwart bestätigt hat.</footer>
 </div>
-<script>window.MK_CFG={"url": "https://lvaukuzgcwgqipxwzabo.supabase.co", "anon": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo", "build": "r18-09240816", "kabine": "https://svbsc.albertklee.de/"};</script>
+<script>window.MK_CFG={"url": "https://lvaukuzgcwgqipxwzabo.supabase.co", "anon": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo", "build": "r19-09240910", "kabine": "https://svbsc.albertklee.de/"};</script>
 <script>
 (function(){
   'use strict';
@@ -170,6 +171,10 @@ footer{text-align:center;color:var(--ink3);font-size:12px;margin-top:18px;line-h
           ${D.deckel_n>3?`<p class="sub" style="margin-top:6px">+ ${D.deckel_n-3} weitere mit offenem Deckel</p>`:''}
           ${pay?`<a class="cta" href="${esc(pay)}">Eigene Strafen ansehen &amp; bezahlen →</a>`:''}`
         :`<div class="empty"><span class="e">🎉</span>Alle Deckel bezahlt – vorbildlich!</div>`}</div>
+
+      ${(D.tunnel||[]).length?`<div class="card tunnel"><span class="pill" style="background:rgba(34,197,94,.14);color:#86efac">🥜 Im Eck</span><h2 style="margin-top:10px">Tunnelkönige</h2>
+        <p class="sub">Wer im Eck am häufigsten getunnelt wurde – ${esc(sl)}.</p>
+        <div class="list">${D.tunnel.map((x,i)=>`<div class="row"><span class="rk">${['👑','🥈','🥉'][i]}</span><span class="tx"><b>${esc(x.name)}</b><small>${['Tunnelkönig','Tunnelprinz','Tunnel-Azubi'][i]}</small></span><em>${x.n}× 🥜</em></div>`).join('')}</div></div>`:''}
 
       <div class="card"><span class="pill" style="background:rgba(91,155,255,.15);color:#9cc3ff">📊 ${esc(sl)}</span>
         ${D.klassiker?`<div class="klass"><span class="ic">🔁</span><div><small class="sub" style="margin:0">Klassiker der Saison</small><b>${esc(D.klassiker.titel)}</b><small class="sub" style="margin:0">${D.klassiker.n}× verhängt · ${eurK(D.klassiker.summe)}</small></div></div>`:''}
