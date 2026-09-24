@@ -26,7 +26,7 @@ body{font-family:var(--font);color:var(--ink);font-size:15px;min-height:100vh;-w
 button,a{font:inherit;color:inherit;cursor:pointer;border:0;background:none;text-decoration:none;-webkit-tap-highlight-color:transparent;}
 .wrap{max-width:560px;margin:0 auto;}
 header{display:flex;align-items:center;gap:12px;padding:calc(18px + env(safe-area-inset-top)) 0 16px;}
-header img{width:44px;height:44px;filter:drop-shadow(0 6px 18px rgba(47,107,255,.45));}
+header img{width:auto;height:40px;filter:drop-shadow(0 6px 18px rgba(47,107,255,.45));}
 header h1{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:.01em;text-transform:uppercase;line-height:1;}
 header p{color:var(--ink2);font-size:13px;margin-top:3px;}
 .card{background:linear-gradient(180deg,var(--s2),var(--s1));border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 12px 32px -12px rgba(0,0,0,.6);position:relative;overflow:hidden;
@@ -106,11 +106,11 @@ footer{text-align:center;color:var(--ink3);font-size:12px;margin-top:18px;line-h
 </head>
 <body>
 <div class="wrap">
-  <header><img src="crest.svg" alt=""><div><h1>Mannschaftskasse</h1><p>SV/BSC Mörlenbach · alles transparent</p></div></header>
+  <header><img src="logo.png" alt=""><div><h1>Mannschaftskasse</h1><p>SV/BSC Mörlenbach · alles transparent</p></div></header>
   <div id="app"><div class="skel"></div><div class="skel"></div></div>
-  <footer>Nur für die Mannschaft – bitte nicht außerhalb der Gruppe teilen.<br>Zählt nur, was der Kassenwart bestätigt hat.</footer>
+  <footer>Nur für die Mannschaft. Bitte nicht außerhalb der Gruppe teilen.<br>Zählt nur, was der Kassenwart bestätigt hat.</footer>
 </div>
-<script>window.MK_CFG={"url": "https://lvaukuzgcwgqipxwzabo.supabase.co", "anon": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo", "build": "r19-09240910", "kabine": "https://svbsc.albertklee.de/"};</script>
+<script>window.MK_CFG={"url": "https://lvaukuzgcwgqipxwzabo.supabase.co", "anon": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo", "build": "4.3-202609241852", "kabine": "https://svbsc.albertklee.de/"};</script>
 <script>
 (function(){
   'use strict';
@@ -130,7 +130,7 @@ footer{text-align:center;color:var(--ink3);font-size:12px;margin-top:18px;line-h
   let D=null, mode=ls.get('mk_mode')||'saison', first=true;
 
   async function load(){
-    if(!KEY){ return lock('Öffne den Kassen-Link aus der Mannschaftsgruppe – dann siehst du hier Kassenstand und Rangliste.'); }
+    if(!KEY){ return lock('Öffne den Kassen-Link aus der Mannschaftsgruppe, dann siehst du hier Kassenstand und Rangliste.'); }
     try{
       const r=await fetch(C.url+'/rest/v1/rpc/kasse_uebersicht',{method:'POST',headers:{'Content-Type':'application/json',apikey:C.anon,Authorization:'Bearer '+C.anon},body:JSON.stringify({p_key:KEY})});
       const j=await r.json().catch(()=>null);
@@ -160,20 +160,20 @@ footer{text-align:center;color:var(--ink3);font-size:12px;margin-top:18px;line-h
           <div class="kpi"><b class="ok">${eurK(s.eingezahlt)}</b><span>eingezahlt ${esc(sl.replace('Saison ',''))}</span></div></div></div>
 
       <div class="card"><span class="pill">🏆 Rangliste</span><h2 style="margin-top:10px">Top-Supporter</h2>
-        <p class="sub">Wer die Kasse am großzügigsten füttert – ohne euch keine Mannschaftsfahrt. Danke für euren Einsatz! 😄</p>
+        <p class="sub">Die treuesten Kassenfüller. Ohne euch keine Mannschaftsfahrt, danke für euren Einsatz 😄</p>
         <div class="seg"><button data-m="saison" class="${mode==='saison'?'on':''}">${esc(sl)}</button><button data-m="ewig" class="${mode==='ewig'?'on':''}">Ewige Tabelle</button></div>
         ${top.length?podium(top):`<div class="empty"><span class="e">🪙</span>${mode==='saison'?'Diese Saison hat noch keiner eine Strafe bezahlt. Das Podest wartet!':'Noch keine bezahlten Strafen.'}</div>`}
         ${s.supporter&&mode==='saison'?`<p class="sub" style="text-align:center;margin-top:12px">${s.supporter} Spieler haben diese Saison schon eingezahlt.</p>`:''}</div>
 
       <div class="card deckel"><span class="pill" style="background:rgba(240,82,82,.14);color:#fca5a5">🧾 Offener Deckel</span><h2 style="margin-top:10px">Hier wartet die Kasse noch</h2>
-        <p class="sub">Die höchsten offenen Strafen gerade – Zahltag naht. 😉</p>
+        <p class="sub">Die höchsten offenen Strafen gerade. Zahltag naht 😉</p>
         ${dk.length?`<div class="list">${dk.map((x,i)=>`<div class="row"><span class="rk">${i+1}</span><span class="tx"><b>${esc(x.name)}</b><small><span class="tag">${DECKEL[i]}</span>${x.n} offene${x.n===1?'r':''} Posten · seit ${dt(x.seit)}</small></span><em class="bad">${eur(x.summe)}</em></div>`).join('')}</div>
           ${D.deckel_n>3?`<p class="sub" style="margin-top:6px">+ ${D.deckel_n-3} weitere mit offenem Deckel</p>`:''}
           ${pay?`<a class="cta" href="${esc(pay)}">Eigene Strafen ansehen &amp; bezahlen →</a>`:''}`
-        :`<div class="empty"><span class="e">🎉</span>Alle Deckel bezahlt – vorbildlich!</div>`}</div>
+        :`<div class="empty"><span class="e">🎉</span>Alle Deckel bezahlt. Vorbildlich!</div>`}</div>
 
       ${(D.tunnel||[]).length?`<div class="card tunnel"><span class="pill" style="background:rgba(34,197,94,.14);color:#86efac">🥜 Im Eck</span><h2 style="margin-top:10px">Tunnelkönige</h2>
-        <p class="sub">Wer im Eck am häufigsten getunnelt wurde – ${esc(sl)}.</p>
+        <p class="sub">${esc(sl)}: Wer im Eck am häufigsten getunnelt wurde.</p>
         <div class="list">${D.tunnel.map((x,i)=>`<div class="row"><span class="rk">${['👑','🥈','🥉'][i]}</span><span class="tx"><b>${esc(x.name)}</b><small>${['Tunnelkönig','Tunnelprinz','Tunnel-Azubi'][i]}</small></span><em>${x.n}× 🥜</em></div>`).join('')}</div></div>`:''}
 
       <div class="card"><span class="pill" style="background:rgba(91,155,255,.15);color:#9cc3ff">📊 ${esc(sl)}</span>
